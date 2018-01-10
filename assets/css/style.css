@@ -1,0 +1,15 @@
+.jumbotron {
+	text-align: center;
+	background-color: springGreen;
+	color: white;
+}
+
+#searchButton {
+	background-color: deepPink;
+	color: darkTurquoise;
+}
+
+button {
+	background-color: darkViolet;
+	color: white;
+}

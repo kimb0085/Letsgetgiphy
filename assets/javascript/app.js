@@ -22,7 +22,7 @@ function createButtons(topics,addClass,addClassTo){
 $(document).on('click', '.searchButton', function(response){
   $('#searches').empty();
   var type = $(this).data('type');
-  console.log('type');
+  // console.log('type');
   var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
         type + "&api_key=nGF9msfxWrGwjWpL80N5ar95n9BcdLEB&limit=10";
   $.ajax({
@@ -42,14 +42,20 @@ $(document).on('click', '.searchButton', function(response){
         image.attr('data-animated', animated);
         image.attr('data-state', still);
         image.addClass('searchImage');
-        image.addClass('gif');
         searchDiv.append(p);
         searchDiv.append(image);
         $('#searches').append(searchDiv);
       }
     });
 
-    $(".gif").on('click', function(){
+     $('#searchButton').on('click', function(){
+      var newSearch = $('input').eq(0).val();
+      topics.push(newSearch);
+      createButtons(topics, 'searchButton', '#buttonsGoHere');
+      return false;
+    });
+
+    $(document).on('click', '.searchImage', function(){
       var state = $(this).attr('data-state');
       if(state === "still") {
         $(this).attr('src', $(this).attr('data-animated'));
@@ -60,10 +66,4 @@ $(document).on('click', '.searchButton', function(response){
       }
     });
 
-    $('#searchButton').on('click', function(){
-      var newSearch = $('input').eq(0).val();
-      topics.push(newSearch);
-      createButtons(topics, 'searchButton', '#buttonsGoHere');
-      return false;
-    });
-});
+  });
