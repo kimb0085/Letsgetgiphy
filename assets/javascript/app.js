@@ -5,7 +5,7 @@ $(function(){
 });
 
 //create topics/classes
-var topics = ['Will and Grace', 'Friends', 'Home Improvement', 'TGIF', 'Spice Girls'];
+var topics = ['Will and Grace', 'Saved by the Bell', 'Friends', 'Home Improvement', 'TGIF', 'Spice Girls'];
 
 function createButtons(topics,addClass,addClassTo){
   $(addClassTo).empty();
@@ -19,10 +19,10 @@ function createButtons(topics,addClass,addClassTo){
 }
 
 //create giphs!
-$(document).on('click', '.searchButton', function(){
+$(document).on('click', '.searchButton', function(response){
   $('#searches').empty();
   var type = $(this).data('type');
-  // console.log('type');
+  console.log('type');
   var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
         type + "&api_key=nGF9msfxWrGwjWpL80N5ar95n9BcdLEB&limit=10";
   $.ajax({
@@ -30,7 +30,7 @@ $(document).on('click', '.searchButton', function(){
           method: "GET"
         })
     .done(function(response){
-      for (var i = 0; i < data.length; i++) {
+      for (var i = 0; i < type.length; i++) {
         var searchDiv = $('<div class="search-item">')
         var rating = response.data[i].rating;
         var p = $('<p>').text('Gif Rating Is: ' + rating);
@@ -42,20 +42,21 @@ $(document).on('click', '.searchButton', function(){
         image.attr('data-animated', animated);
         image.attr('data-state', still);
         image.addClass('searchImage');
+        image.addClass('gif');
         searchDiv.append(p);
         searchDiv.append(image);
         $('#searches').append(searchDiv);
       }
     });
 
-    $(document).on('click', function(){
+    $(".gif").on('click', function(){
       var state = $(this).attr('data-state');
-      if(state === still) {
-        $(this).attr('src', $(this).data('animated'));
-        $(this).attr('data-state' 'animated');
+      if(state === "still") {
+        $(this).attr('src', $(this).attr('data-animated'));
+        $(this).attr('data-state', 'animated');
       } else {
-        $(this).attr('src', $(this).data('still'));
-        $(this).attr('data-state' 'still');
+        $(this).attr('src', $(this).attr('data-still'));
+        $(this).attr('data-state', 'still');
       }
     });
 
